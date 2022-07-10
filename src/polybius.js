@@ -6,7 +6,7 @@
 const polybiusModule = (function () {
   //Here i am making a function that creates an array with objects in it. each object has a letter and its number value assigned to it.
   //all according to the polybius cipher grid.
-  function cipher(){
+  function _cipher(){
     //here i am creating a string of the alphabet for later use to generate the cipher keys
     letters = 'abcdefghijklmnopqrstuvwxyz';
     //creating the variable/array to hold all the key/values of the cipher
@@ -56,7 +56,7 @@ const polybiusModule = (function () {
     let finalMessage = [];
     //using the cipher function made above i am creating and storing the polybius keys in this variable 'cypherKeys'
     //we will use this later to access the number and letter pairs inside
-    let cypherKeys = cipher();
+    let cypherKeys = _cipher();
     //using an if else statement i am separating what will be done when encoding vs decoding
     //first up is encoding
     if(encode){
