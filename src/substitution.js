@@ -32,16 +32,16 @@ const substitutionModule = (function () {
     //when encoding
     if(encode){
       //using a for in loop
-      for(char in input){
+      for(char of input){
         //taking the current character in input, getting the index of it in the OG alphabet and getting the corresponding character in the provided alpabet. then pushing that into the finalMessage array
-        finalMessage.push(alphabet[ogAlphabet.indexOf(input[char])]);
+        finalMessage.push(alphabet[ogAlphabet.indexOf(char)]);
       }
     //when decoding
     } else {
       //using a for in loop
-      for(char in input){
+      for(char of input){
         //same thing as encoding but reversed
-        finalMessage.push(ogAlphabet[alphabet.indexOf(input[char])]);
+        finalMessage.push(ogAlphabet[alphabet.indexOf(char)]);
       }
     }
   //finally return finalMessage joined together as a string
