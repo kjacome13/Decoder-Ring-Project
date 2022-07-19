@@ -15,18 +15,16 @@ const polybiusModule = (function () {
     let columns = 1;
     let rows = 1;
     //using a for in loop
-    for(letter in letters){
-      //I create a variable to hold the current letter
-      let currLetter = letters.charAt(letter);
+    for(letter of letters){
       //create the format for each object that will get pushed into the cipherKeys array.
       let cipherKey = {
         //making the current letter the key and the combined column/row the value
-        letter : currLetter,
+        letter : letter,
         number : `${columns}${rows}`,
       };
       //here i am using an if statement to ensure that both 'i' and 'j' will be assigned 42 as their value.
       //i do this by having the loop skip over adding to the columns and rows values until after both 'i' and 'j' have been assigned the proper value (42).
-      if(currLetter == 'i'){
+      if(letter == 'i'){
         //pushing the 'i' object into the array
         cipherKeys.push(cipherKey);
       } else {
@@ -41,7 +39,7 @@ const polybiusModule = (function () {
             rows++;
           //if it hasnt gone over 5 yet then carry on by only adding 1 to the column
         } else {
-            columns++
+            columns++;
         }
       }
     }
@@ -50,7 +48,7 @@ const polybiusModule = (function () {
     return cipherKeys;
   }
 
-  //here i am making the encoding/decoding function...it should take in an input/message and a boolean with will determine if we are encoding or decoding..should return a string with either an encoded message or decoded message
+  //here i am making the encoding/decoding function...it should take in an input/message and a boolean which will determine if we are encoding or decoding..should return a string with either an encoded message or decoded message
   function polybius(input, encode = true) {
     //creating an array to hold the characters of our final message.. will be returning this at the end
     let finalMessage = [];
@@ -63,10 +61,10 @@ const polybiusModule = (function () {
       //making input lowercase
       input = input.toLowerCase();
       //using a for in loop
-      for(char in input){
+      for(char of input){
       //i am finding each object holding the key/value pair for each character in the input message.
       //storing the object in this variable 'temp'
-      let temp = cypherKeys.find(obj => obj.letter === input.charAt(char));
+      let temp = cypherKeys.find(obj => obj.letter === char);
       //if temp has a value assigned to it
       if(temp){
           //then we push the number value in the temp object into the finalMessage array
@@ -74,7 +72,7 @@ const polybiusModule = (function () {
         //if temp does not have a valid value meaning that the current character is not part of the alphabet  
       } else {
           //then we push that character as is into the finalMessage array.
-          finalMessage.push(input.charAt(char));
+          finalMessage.push(char);
       }}
     //here is the decoding area
     } else {
@@ -89,34 +87,22 @@ const polybiusModule = (function () {
         if(input[i+2] == " "){
             //if it is then we create a temporary variable to hold the current number pair
             let tempVar = input.slice(i, i+2);
-            //find that number pair's corresponding object holding its number and letter information
-            let translated = cypherKeys.find(obj => obj.number === tempVar);
-            //then setting the variable to only the letter
-            translated = translated.letter;
-            //here in the case that tempVar is 42
-            if(tempVar == 42) {
-                //we are setting the 'translated' variable that is to be pushed into the final array to 'ij'
-                translated = 'ij';
-            }
-            //pusing the translated letter into the finalMessage array
-            finalMessage.push(translated);
-            //and also pushing the space following this letter 
-            finalMessage.push(input[i+2]);
+            //find that number pair's corresponding object holding its number and letter information and grab the letter
+            let translated = cypherKeys.find(obj => obj.number === tempVar).letter
+            //here in the case that tempVar is 42 we then set translated variable to 'ij'
+            if(tempVar == 42) translated = 'ij';
+            //pusing the translated letter and the space after it into the finalMessage array
+            finalMessage.push(translated, input[i+2]);
             //then incrementing 'i' by 1 so that it can skip over the space and move on to the next number pair.
             i++;
           //if there is no space following the current number pair then we do the following
         } else {
             //create a temporary varible to hold the current number pair
             let tempVar = input.slice(i, i+2);
-            //put the number pair's corresponding object containing its information in the translated variable
-            let translated = cypherKeys.find(obj => obj.number === tempVar);
-            //reassigning the same variable to hold only the corresponding letter of the current number pair
-            translated = translated.letter;
-            //again if the number pair is 42
-            if(tempVar == 42) {
-                //set the variable to 'ij'
-                translated = 'ij';
-            }
+            //assigning the variable to hold only the corresponding letter of the found current number pair
+            let translated = cypherKeys.find(obj => obj.number === tempVar).letter
+            //again if the number pair is 42 set the variable to 'ij'
+            if(tempVar == 42) translated = 'ij';
             //finally push the letter into the finalMessage array 
             finalMessage.push(translated);
         }
