@@ -8,7 +8,7 @@ const polybiusModule = (function () {
   //all according to the polybius cipher grid.
   function _cipher(){
     //here i am creating a string of the alphabet for later use to generate the cipher keys
-    letters = 'abcdefghijklmnopqrstuvwxyz';
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
     //creating the variable/array to hold all the key/values of the cipher
     const cipherKeys = [];
     //creating a column and row to count through
